@@ -41,13 +41,18 @@ def create_author(
     try:
         return crud.create_author(db=db, author=author)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"Error creating author: {str(e)}")
+        raise HTTPException(
+            status_code=400,
+            detail=f"Error creating author: {str(e)}"
+        )
 
 
 @app.get("/authors/", response_model=List[schemas.AuthorResponse])
 def list_authors(
         skip: int = Query(0, ge=0, description="Number of records to skip"),
-        limit: int = Query(10, ge=1, le=100, description="Maximum number of records to return"),
+        limit: int = Query(
+            10, ge=1, le=100, description="Maximum number of records to return"
+        ),
         db: Session = Depends(get_db)
 ):
     """Retrieve a paginated list of authors."""
@@ -68,7 +73,10 @@ def get_author(
 
 
 # Book Endpoints
-@app.post("/authors/{author_id}/books/", response_model=schemas.BookResponse, status_code=201)
+@app.post(
+    "/authors/{author_id}/books/",
+    response_model=schemas.BookResponse, status_code=201
+)
 def create_book_for_author(
         author_id: int,
         book: schemas.BookCreate,
@@ -86,8 +94,12 @@ def create_book_for_author(
 @app.get("/books/", response_model=List[schemas.BookWithAuthor])
 def list_books(
         skip: int = Query(0, ge=0, description="Number of records to skip"),
-        limit: int = Query(10, ge=1, le=100, description="Maximum number of records to return"),
-        author_id: Optional[int] = Query(None, description="Filter books by author ID"),
+        limit: int = Query(
+            10, ge=1, le=100, description="Maximum number of records to return"
+        ),
+        author_id: Optional[int] = Query(
+            None, description="Filter books by author ID"
+        ),
         db: Session = Depends(get_db)
 ):
     """

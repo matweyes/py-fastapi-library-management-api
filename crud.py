@@ -14,18 +14,28 @@ def create_author(db: Session, author: schemas.AuthorCreate) -> models.Author:
     return db_author
 
 
-def get_authors(db: Session, skip: int = 0, limit: int = 10) -> list[models.Author]:
+def get_authors(
+        db: Session,
+        skip: int = 0,
+        limit: int = 10
+) -> list[models.Author]:
     """Retrieve a paginated list of authors."""
     return db.query(models.Author).offset(skip).limit(limit).all()
 
 
 def get_author_by_id(db: Session, author_id: int) -> Optional[models.Author]:
     """Retrieve a single author by ID."""
-    return db.query(models.Author).filter(models.Author.id == author_id).first()
+    return db.query(
+        models.Author
+    ).filter(models.Author.id == author_id).first()
 
 
 # Book CRUD operations
-def create_book(db: Session, book: schemas.BookCreate, author_id: int) -> models.Book:
+def create_book(
+        db: Session,
+        book: schemas.BookCreate,
+        author_id: int
+) -> models.Book:
     """Create a new book for a specific author."""
     db_book = models.Book(
         title=book.title,
@@ -57,7 +67,12 @@ def get_books(
     return query.offset(skip).limit(limit).all()
 
 
-def get_books_by_author(db: Session, author_id: int, skip: int = 0, limit: int = 10) -> list[models.Book]:
+def get_books_by_author(
+        db: Session,
+        author_id: int,
+        skip: int = 0,
+        limit: int = 10
+) -> list[models.Book]:
     """Retrieve books filtered by a specific author ID."""
     return db.query(models.Book).filter(
         models.Book.author_id == author_id

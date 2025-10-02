@@ -11,7 +11,11 @@ class Author(Base):
     bio = Column(String, nullable=True)
 
     # One-to-many relationship with Book
-    books = relationship("Book", back_populates="author", cascade="all, delete-orphan")
+    books = relationship(
+        "Book",
+        back_populates="author",
+        cascade="all, delete-orphan"
+    )
 
 
 class Book(Base):

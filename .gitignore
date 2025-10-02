@@ -129,8 +129,6 @@ dmypy.json
 .pyre/
 .idea/
 library.db
-
-
 alembic
 alembic.ini
 requirements.txt
